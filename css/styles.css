@@ -129,6 +129,61 @@ header ul {
   cursor: pointer;
 }
 
+.backdrop {
+  z-index: 999;
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  scale: 1;
+  opacity: 1;
+  transition: 250ms opacity cubic-bezier(0.4, 0, 0.2, 1),
+    250ms scale cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal {
+  position: relative;
+  display: flex;
+  min-width: 528px;
+  min-height: 581px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transform: scale(1);
+  transition: 250ms transform cubic-bezier(0.4, 0, 0.2, 1);
+}
+.backdrop.backdrop.is-hidden .modal {
+  transform: scale(2);
+}
+.btn-modal {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  top: 8px;
+  right: 8px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.icon-vector {
+  display: flex;
+  width: 11px;
+  height: 11px;
+}
+
 .logo {
   display: flex;
   font-family: "Raleway", sans-serif;
@@ -150,23 +205,46 @@ header ul {
   color: #2196f3;
 }
 
+nav li:not(:last-child) {
+  margin-right: 50px;
+}
+nav li {
+  position: relative;
+}
+
 .nav-item {
+  display: flex;
+  height: 80px;
+  align-items: center;
   font-weight: 500;
   font-size: 14px;
   line-height: calc(16 / 14);
   letter-spacing: 0.02em;
   color: var(--nav-item-color);
   text-decoration: none;
-}
-
-nav li:not(:last-child) {
-  margin-right: 50px;
+  transition: 250ms color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item:hover,
 .nav-item:focus {
   color: var(--nav-item-active);
 }
+
+.active {
+  color: var(--nav-item-active);
+}
+
+.active::after {
+  position: absolute;
+  display: flex;
+  content: "";
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--nav-item-active);
+  border-radius: 2px;
+}
+
 header .contact {
   margin-left: auto;
 }
@@ -234,6 +312,33 @@ main .conteiner {
   justify-content: space-between;
 }
 
+.works .works-item {
+  position: relative;
+}
+.works-item img + div {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 70px;
+
+  background-color: rgba(47, 48, 58, 0.8);
+}
+
+.works .works-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: calc(16 / 14);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
 .team {
   background-color: #f5f4fa;
 }
@@ -284,14 +389,16 @@ main .conteiner {
 }
 
 .team-item a {
+  background-color: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-
   color: #afb1b8;
+  transition: 250ms color cubic-bezier(0.4, 0, 0.2, 1),
+    250ms background-color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-item a:hover,
@@ -334,6 +441,8 @@ main .conteiner {
   border-radius: 4px;
 
   color: #afb1b8;
+  transition: 250ms color cubic-bezier(0.4, 0, 0.2, 1),
+    250ms border-color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .client-list a:hover,
@@ -350,6 +459,7 @@ main .conteiner {
   letter-spacing: 0.02em;
   color: var(--primery-text-color);
   text-decoration: none;
+  transition: 250ms color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .contact-footer {
@@ -359,6 +469,7 @@ main .conteiner {
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
+  transition: 250ms color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .contact-header:hover,
@@ -430,6 +541,7 @@ main .conteiner {
   color: inherit;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
+  transition: 250ms background-color cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer .icon {
@@ -465,20 +577,24 @@ main .conteiner {
   padding: 6px 22px;
   border-radius: 4px;
   text-align: center;
+
   letter-spacing: 0.03em;
   color: #212121;
   font-weight: 500;
   font-size: 16px;
   line-height: calc(26 / 16);
+
+  box-shadow: none;
   background-color: #f5f4fa;
+  transition: 250ms background-color cubic-bezier(0.4, 0, 0.2, 1),
+    250ms color cubic-bezier(0.4, 0, 0.2, 1),
+    250ms box-shadow cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .portfolio-filter input[type="radio"]:checked + label,
-/* .portfolio-filter label:hover,
-.portfolio-filter label:focus, */
 .portfolio-filter input[type="radio"]:hover + label,
 .portfolio-filter input[type="radio"]:focus + label {
-  background: #2196f3;
+  background-color: #2196f3;
   color: #ffffff;
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
     0px 2px 2px rgba(0, 0, 0, 0.12);
@@ -491,12 +607,19 @@ main .conteiner {
 }
 
 .portfolio-item li {
+  width: 370px;
   margin: 15px;
+  box-shadow: none;
+  transition: 250ms box-shadow cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .portfolio-item li:hover {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.portfolio-item li > div {
+  position: relative;
+  overflow: hidden;
 }
 /* .portfolio-item li:not(:nth-child(3n)) {
   margin-right: 30px;
@@ -506,7 +629,7 @@ main .conteiner {
   margin-bottom: 30px;
 }  */
 
-.portfolio-item div {
+.portfolio-item .title {
   padding-top: 20px;
   padding-right: 24px;
   padding-bottom: 20px;
@@ -516,10 +639,30 @@ main .conteiner {
   border-bottom: 1px solid #eeeeee;
 }
 
-.portfolio-item .title {
-  padding: 20xp 24px;
+.portfolio-item .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 100%;
+  display: flex;
+  padding-right: 24px;
+  padding-left: 24px;
+  align-items: center;
+  background-color: rgba(33, 150, 243, 0.9);
+  color: #ffffff;
+  transition: 250ms top cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.portfolio-item .overlay p {
+  font-size: 18px;
+  line-height: calc(28 / 18);
+
+  letter-spacing: 0.03em;
+  color: #ffffff;
+}
+.portfolio-item li:hover .overlay {
+  top: 0;
+}
 .portfolio-item h2 {
   margin-bottom: 4px;
   font-weight: 700;
